@@ -294,6 +294,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
 .visits-stage { position: relative; display: grid; gap: 1.6rem; }
 .dock { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.9rem; min-height: 2.2rem; }
 .tpair { display: inline-flex; gap: 0.2rem; padding: 0.2rem; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); position: relative; z-index: 2; will-change: transform; }
+.t.sch-lp, .t.sch-rv, .t.sch-aa { color: #fff; }
 .t { width: 1.5rem; height: 1.5rem; border-radius: 50%; display: grid; place-items: center; font: 600 0.8rem/1 var(--font-mono); background: var(--ink); color: var(--surface); }
 .groups { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 0.75rem; }
 .group { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 1.3rem 0.5rem 0.7rem; display: grid; gap: 0.5rem; justify-items: center; background: var(--bg); min-width: 0; }
@@ -340,11 +341,19 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
 /* Keep wide children (tables, the report mock) from widening the page on phones */
 section > .wrap { grid-template-columns: minmax(0, 1fr); }
 @media (max-width: 44rem) { .report { grid-template-columns: minmax(0, 1fr); } .tabs { min-width: 0; } }
+.t.sch-lp { background: var(--lava); }
+.t.sch-rv { background: var(--accent); }
+.t.sch-aa { background: var(--moss); }
+.flag.trip { color: var(--accent); }
+
+/* Film */
+.film { width: 100%; aspect-ratio: 16 / 9; height: auto; display: block; border-radius: 14px; border: 1px solid var(--line); background: #1b1820; }
 </style>
 </head>
 <body>
 <div class="bar">
   <nav class="wrap" aria-label="Sections">
+    <a href="#film">Film</a>
     <a href="#summary">Summary</a>
     <a href="#draft">Heinz's draft</a>
     <a href="#changes">What v2 adds</a>
@@ -377,6 +386,21 @@ section > .wrap { grid-template-columns: minmax(0, 1fr); }
     </div>
   </div>
 </header>
+
+<section id="film">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">70 seconds · sound on</p>
+      <h2>The whole process, as a short film</h2>
+    </div>
+    <video class="film" controls preload="metadata" playsinline poster="film-poster.jpg">
+      <source src="film.mp4" type="video/mp4">
+      <track kind="subtitles" src="film.vtt" srclang="en" label="English">
+      Your browser can't play this video. <a href="film.mp4">Download the film (MP4)</a>.
+    </video>
+    <p class="note">From arrival to the graded report: building with AI, catching its mistakes, daily notes, the group visits on 21 January, the bus trip on 22 January, and the AI report. Drawn in code with p5.brush, narrated with the open Kokoro voice, with original music. Subtitles are in the player menu.</p>
+  </div>
+</section>
 
 <section id="summary">
   <div class="wrap">
@@ -454,7 +478,7 @@ section > .wrap { grid-template-columns: minmax(0, 1fr); }
           <tr><td>Interviews<span class="new">new</span></td><td class="v1">Not covered</td><td>Design sprint interviews must be with real people</td><td>The problem has to come from real users, not generated ones</td></tr>
           <tr><td>AI report<span class="new">new</span></td><td class="v1">Not covered</td><td><code>report/index.html</code> with six sections, built with AI from the notes</td><td>Students practise turning their work into a clear, visual report. Other teams learn from it</td></tr>
           <tr><td>Grading</td><td class="v1">Methods listed, no rubric item</td><td>Two rubric items: Understanding your code and The AI report</td><td>Every requirement in the policy now has a place in the grade</td></tr>
-          <tr><td>21 January<span class="new">new</span></td><td class="v1">Not covered. Today each group presents its design and GitHub to everyone</td><td>Group visits: pairs of teachers ask every group the same questions. One asks, the other marks</td><td>No presentation area in the classroom, which students complained about last year. The same questions make the groups comparable, and the visit is a natural place to talk through each student's code</td></tr>
+          <tr><td>21 January<span class="new">new</span></td><td class="v1">Not covered. Today each group presents its design and GitHub to everyone</td><td>Group visits: three pairs of teachers, each pair from two different countries, ask every group the same questions. One asks, the other marks</td><td>No presentation area in the classroom, which students complained about last year. The same questions make the groups comparable, and the visit is a natural place to talk through each student's code</td></tr>
           <tr><td>Penalties</td><td class="v1"><q>This is not a punishment</q></td><td>Kept. Adds: declared AI use is never penalised, and no AI detectors are used</td><td>Fear of penalties is the main reason students hide AI use</td></tr>
         </tbody>
       </table>
@@ -472,7 +496,7 @@ section > .wrap { grid-template-columns: minmax(0, 1fr); }
       <li><time>11–15 Jan</time><div><h3>Online design sprint</h3><p>Teams interview real people. AI can help prepare the questions and sort the notes. Each student starts a notes file in the team repository.</p></div></li>
       <li><time>18 Jan</time><div><h3>Meetup in Las Palmas</h3><p>Teams set up <code>report/notes/</code> and agree who owns which part of the code.</p></div></li>
       <li><time>19–28 Jan</time><div><h3>Project work</h3><p>Every day: students commit their notes and the AI's account. Teachers run code reviews and spot checks, which count toward Understanding your code.</p></div></li>
-      <li><time>21 Jan</time><div><h3>Group visits</h3><p>Pairs of teachers visit each group where it works and ask every group the same questions. Design, Design Sprint, UI and GitHub are graded. The teachers also look at the notes and give feedback (not graded). <span class="check">Option A:</span> Understanding your code is graded here.</p></div></li>
+      <li><time>21 Jan</time><div><h3>Group visits</h3><p>Three pairs of teachers, each from two different countries, visit each group where it works and ask every group the same questions. Design, Design Sprint, UI and GitHub are graded. The teachers also look at the notes and give feedback (not graded). <span class="check">Option A:</span> Understanding your code is graded here.</p></div></li>
       <li><time>29 Jan</time><div><h3>Final presentation</h3><p>Product, Presentation and Q&amp;A are graded. Teams submit the link to their AI report. <span class="check">Option B:</span> Understanding your code is graded here.</p></div></li>
       <li><time>After</time><div><h3>Post assessment</h3><p>Teachers review the front end and back end code, and grade The AI report alongside it.</p></div></li>
     </ol>
@@ -508,7 +532,7 @@ section > .wrap { grid-template-columns: minmax(0, 1fr); }
       <div class="legend-row" aria-hidden="true"><span><i class="lg-c"></i>code commit</span><span><i class="dot sch-rv"></i>student's notes</span><span><i class="dot sch-aa"></i>the AI's account</span></div>
       <div class="loop-stage" aria-hidden="true">
         <svg class="wires"></svg>
-        <div class="lanes"><span></span><span class="day"><b>19</b><small>Tue</small></span><span class="day"><b>20</b><small>Wed</small></span><span class="day"><b>21</b><small>Thu</small></span><span class="day"><b>22</b><small>Fri</small></span><span class="day gap"><b>25</b><small>Mon</small></span><span class="day"><b>26</b><small>Tue</small></span><span class="day"><b>27</b><small>Wed</small></span><span class="day"><b>28</b><small>Thu</small></span><span class="lab">Code</span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code gap"><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="lab">Notes</span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes gap"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="lab">Check</span><span class="cell"></span><span class="cell"></span><span class="cell"><span class="flag">visit</span></span><span class="cell"></span><span class="cell gap"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span></div>
+        <div class="lanes"><span></span><span class="day"><b>19</b><small>Tue</small></span><span class="day"><b>20</b><small>Wed</small></span><span class="day"><b>21</b><small>Thu</small></span><span class="day"><b>22</b><small>Fri</small></span><span class="day gap"><b>25</b><small>Mon</small></span><span class="day"><b>26</b><small>Tue</small></span><span class="day"><b>27</b><small>Wed</small></span><span class="day"><b>28</b><small>Thu</small></span><span class="lab">Code</span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i></span><span class="cell code"></span><span class="cell code gap"><i class="c"></i><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i></span><span class="cell code"><i class="c"></i><i class="c"></i><i class="c"></i></span><span class="lab">Notes</span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"></span><span class="cell notes gap"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="cell notes"><i class="n"></i><i class="a"></i></span><span class="lab">Check</span><span class="cell"></span><span class="cell"></span><span class="cell"><span class="flag">visit</span></span><span class="cell"><span class="flag trip">bus trip</span></span><span class="cell gap"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span></div>
         <div class="rep"><header>report/index.html</header><ol><li><span>Try it</span></li><li><span>The problem</span></li><li><span>Decision log</span></li><li class="wrong"><span>What the AI got wrong</span></li><li><span>Tutorials</span></li><li><span>How we used AI</span></li></ol><span class="stamp">Graded after the project</span></div>
       </div>
       <figcaption><p class="cap" aria-live="polite">One student's project days, from the first commit to the graded report.</p><button class="btn ghost" type="button">Play</button></figcaption>
@@ -571,24 +595,24 @@ section > .wrap { grid-template-columns: minmax(0, 1fr); }
     <div class="head">
       <p class="eyebrow">21 January · suggestion</p>
       <h2>Group visits instead of presentations</h2>
-      <p class="lead">On 21 January the groups do not present. Pairs of teachers visit each group where it works and ask every group the same questions. One teacher asks, and the other marks the answers on the rubric.</p>
+      <p class="lead">On 21 January the groups do not present. Three pairs of teachers visit each group where it works and ask every group the same questions. One teacher asks, and the other marks the answers on the rubric. Every pair mixes two countries: the same blending we ask of the students.</p>
     </div>
     <div class="evidence">
-      <div class="fact"><span class="num">4 pairs</span><p>8 teachers work in pairs of two: one asks the questions, one marks.</p></div>
-      <div class="fact"><span class="num">~2 groups</span><p>per pair, with about 8 groups in the project.</p></div>
+      <div class="fact"><span class="num">3 pairs</span><p>6 teachers, two from each school, in pairs from two different countries. One asks the questions, one marks.</p></div>
+      <div class="fact"><span class="num">2–3 groups</span><p>per pair, with about 8 groups in the project: about 1½ hours for each pair.</p></div>
       <div class="fact"><span class="num">30–35 min</span><p>per visit: about 15 minutes of group questions, plus 3–5 minutes per student if Understanding your code is graded here. In 2026 the groups had 3–4 students.</p></div>
     </div>
     <figure class="anim" id="visits-anim">
-      <div class="legend-row" aria-hidden="true"><span><span class="t">?</span>asks</span><span><span class="t">✓</span>marks</span><span><i class="dot sch-lp"></i>El Rincón</span><span><i class="dot sch-rv"></i>Tækniskólinn</span><span><i class="dot sch-aa"></i>TECHCOLLEGE</span><span><span class="marks"><i style="--f:1"></i></span>one mark</span></div>
+      <div class="legend-row" aria-hidden="true"><span><span class="t">?</span>asks</span><span><span class="t">✓</span>marks (teachers wear their school's colour)</span><span><i class="dot sch-lp"></i>El Rincón</span><span><i class="dot sch-rv"></i>Tækniskólinn</span><span><i class="dot sch-aa"></i>TECHCOLLEGE</span><span><span class="marks"><i style="--f:1"></i></span>one mark</span></div>
       <div class="visits-stage" aria-hidden="true">
-        <div class="dock"><span class="tpair"><span class="t">?</span><span class="t">✓</span></span><span class="tpair"><span class="t">?</span><span class="t">✓</span></span><span class="tpair"><span class="t">?</span><span class="t">✓</span></span><span class="tpair"><span class="t">?</span><span class="t">✓</span></span></div>
+        <div class="dock"><span class="tpair"><span class="t sch-rv">?</span><span class="t sch-lp">✓</span></span><span class="tpair"><span class="t sch-lp">?</span><span class="t sch-aa">✓</span></span><span class="tpair"><span class="t sch-aa">?</span><span class="t sch-rv">✓</span></span></div>
         <div class="groups"><div class="group"><span class="ring"></span><span class="gname">Group 1</span><span class="seats"><i class="dot sch-lp"></i><i class="dot sch-rv"></i><i class="dot sch-aa"></i><i class="dot sch-rv"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div><div class="group"><span class="ring"></span><span class="gname">Group 2</span><span class="seats"><i class="dot sch-rv"></i><i class="dot sch-aa"></i><i class="dot sch-lp"></i><i class="dot sch-lp"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div><div class="group"><span class="ring"></span><span class="gname">Group 3</span><span class="seats"><i class="dot sch-aa"></i><i class="dot sch-lp"></i><i class="dot sch-rv"></i><i class="dot sch-aa"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div><div class="group"><span class="ring"></span><span class="gname">Group 4</span><span class="seats"><i class="dot sch-lp"></i><i class="dot sch-aa"></i><i class="dot sch-rv"></i><i class="dot sch-rv"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div><div class="group"><span class="ring"></span><span class="gname">Group 5</span><span class="seats"><i class="dot sch-rv"></i><i class="dot sch-lp"></i><i class="dot sch-aa"></i><i class="dot sch-lp"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div><div class="group"><span class="ring"></span><span class="gname">Group 6</span><span class="seats"><i class="dot sch-aa"></i><i class="dot sch-rv"></i><i class="dot sch-lp"></i><i class="dot sch-aa"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div><div class="group"><span class="ring"></span><span class="gname">Group 7</span><span class="seats"><i class="dot sch-lp"></i><i class="dot sch-rv"></i><i class="dot sch-aa"></i><i class="dot sch-lp"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div><div class="group"><span class="ring"></span><span class="gname">Group 8</span><span class="seats"><i class="dot sch-rv"></i><i class="dot sch-aa"></i><i class="dot sch-lp"></i><i class="dot sch-rv"></i></span><span class="marks"><i></i><i></i><i></i><i></i><i></i></span></div></div>
       </div>
-      <figcaption><p class="cap" aria-live="polite">Four pairs of teachers visit eight groups, two groups each.</p><button class="btn ghost" type="button">Play</button></figcaption>
+      <figcaption><p class="cap" aria-live="polite">Three mixed pairs of teachers visit eight groups.</p><button class="btn ghost" type="button">Play</button></figcaption>
     </figure>
     <div class="parts">
-      <div class="part"><p class="eyebrow">Why visits</p><ul><li>No part of the classroom has to become a presentation area, which students complained about last year</li><li>Every group gets the same questions, so the marks are comparable</li><li>Students answer at their own screens, where they can show their work</li><li>Checking each student's code fits into the visit without an extra session</li></ul></div>
-      <div class="part"><p class="eyebrow">What we need to agree on</p><ul><li>The question list below</li><li>Who is in each pair, and which groups they visit</li><li>The time slot for each visit</li></ul></div>
+      <div class="part"><p class="eyebrow">Why visits</p><ul><li>No part of the classroom has to become a presentation area, which students complained about last year</li><li>Every group gets the same questions, so the marks are comparable</li><li>Students answer at their own screens, where they can show their work</li><li>Checking each student's code fits into the visit without an extra session</li><li>Mixed pairs show the students the collaboration we ask of them</li></ul></div>
+      <div class="part"><p class="eyebrow">What we need to agree on</p><ul><li>The question list below</li><li>The three pairs, and which groups each pair visits</li><li>The time slot for each visit</li></ul></div>
     </div>
     <div class="subhead"><h3>Draft question list</h3><p class="note">Every group gets the same questions in the same order. Each question belongs to a rubric item, so every answer can be marked.</p></div>
     <div class="scroll">
@@ -727,7 +751,7 @@ section > .wrap { grid-template-columns: minmax(0, 1fr); }
     </div>
     <ol class="agenda">
       <li><div><h3>Adopt v2 as the common policy for 2027?</h3><p>Or agree on changes, and merge the branch once they are in.</p></div></li>
-      <li><div><h3>Replace the 21 January presentation with group visits?</h3><p>Four pairs of teachers, about two groups each, the same questions for every group. Do we agree on the question list, and do we mix schools in each pair?</p></div></li>
+      <li><div><h3>Replace the 21 January presentation with group visits?</h3><p>Three pairs of teachers, each pair from two different countries, two or three groups each, and the same questions for every group. Do we agree on the question list, the pairs and which groups each pair visits?</p></div></li>
       <li><div><h3>Does v2 fit each school's own rules?</h3><p>In Danish vocational programmes, AI is not a permitted aid in exams or exam preparation unless the programme's fagbilag allows it [6]. TECHCOLLEGE: does any part of the project count as an exam? El Rincón: are there Spanish or Canarian rules to add?</p><p class="who">TECHCOLLEGE · El Rincón</p></div></li>
       <li><div><h3>When do we grade Understanding your code?</h3><p>During the group visits on 21 January, or at the final presentation on 29 January. If on 29 January: how do we split the students between the teachers?</p></div></li>
       <li><div><h3>The AI report in the post assessment?</h3><p>And do we keep each new item as one grade, or split them into the smaller parts?</p></div></li>
@@ -1079,33 +1103,36 @@ document.querySelectorAll("section[id]").forEach(s => io.observe(s));
     const caps = [];
 
     tl.addLabel("intro", 0.2);
-    caps.push(["intro", "Four pairs of teachers. In each pair one teacher asks the questions (?) and the other marks the answers (✓)."]);
+    caps.push(["intro", "Three pairs of teachers, each from two different countries. One asks the questions (?) and the other marks the answers (✓)."]);
     tl.to(pairs, { scale: 1.15, duration: 0.3, yoyo: true, repeat: 1, stagger: 0.1, ease: "power1.inOut" }, "intro+=0.3");
 
     const visit = (round, assigned, step) => {
       const v = "visit" + round;
       tl.addLabel(v, "+=0.6");
-      pairs.forEach((pair, p) => tl.to(pair, to(p, assigned[p]), v + "+=" + p * 0.12));
-      const rings = assigned.map(g => groups[g].querySelector(".ring"));
+      pairs.forEach((pair, p) => tl.to(pair, assigned[p] < 0 ? { x: 0, y: 0 } : to(p, assigned[p]), v + "+=" + p * 0.12));
+      const visited = assigned.filter(g => g >= 0), askers = pairs.filter((_, p) => assigned[p] >= 0);
+      const rings = visited.map(g => groups[g].querySelector(".ring"));
       tl.to(rings, { autoAlpha: 1, duration: 0.3, ease: "power1.out" }, v + "+=1");
       tl.addLabel("questions" + round, "+=0.3");
       for (let q = 0; q < 5; q++) {
         const at = "questions" + round + "+=" + q * step;
-        tl.to(pairs.map(pair => pair.children[0]), { scale: 1.3, duration: step / 3, yoyo: true, repeat: 1, ease: "power1.inOut" }, at);
-        tl.to(assigned.map(g => groups[g].querySelectorAll(".marks i")[q]), { "--f": 1, duration: step * 0.6, ease: "power1.out" }, at + "+=" + step * 0.4);
+        tl.to(askers.map(pair => pair.children[0]), { scale: 1.3, duration: step / 3, yoyo: true, repeat: 1, ease: "power1.inOut" }, at);
+        tl.to(visited.map(g => groups[g].querySelectorAll(".marks i")[q]), { "--f": 1, duration: step * 0.6, ease: "power1.out" }, at + "+=" + step * 0.4);
       }
       tl.to(rings, { autoAlpha: 0, duration: 0.3 }, "+=0.3");
     };
 
-    visit(1, [0, 2, 4, 6], 0.75);
+    visit(1, [0, 2, 5], 0.75);
     caps.push(["visit1", "Visit 1: each pair goes to a group, at the table where the group works. No presentation area is needed."]);
     caps.push(["questions1", "Every group gets the same questions: design sprint, design, UI, GitHub, and each student's code (if option A)."]);
-    visit(2, [1, 3, 5, 7], 0.5);
-    caps.push(["visit2", "Visit 2: each pair moves on to its second group and asks the same questions."]);
+    visit(2, [1, 3, 6], 0.5);
+    visit(3, [4, 7, -1], 0.4);
+    caps.push(["visit2", "Visit 2: each pair moves on to its next group and asks the same questions."]);
+    caps.push(["visit3", "Two of the pairs make a third visit, so all eight groups are covered."]);
 
     tl.addLabel("end", "+=0.3");
     tl.to(pairs, { x: 0, y: 0, stagger: 0.08 }, "end");
-    caps.push(["end", "Eight groups, the same five marks for each, and only two visits per pair."]);
+    caps.push(["end", "Eight groups, the same five marks for each, in two or three visits per pair."]);
     return { tl, caps };
   }
 
@@ -1113,7 +1140,7 @@ document.querySelectorAll("section[id]").forEach(s => io.observe(s));
     const stage = fig.querySelector(".loop-stage");
     const code = [...fig.querySelectorAll(".cell.code")];
     const notes = [...fig.querySelectorAll(".cell.notes")];
-    const flag = fig.querySelector(".flag");
+    const [flag, trip] = fig.querySelectorAll(".flag");
     const items = [...fig.querySelectorAll(".rep li")];
     const rep = fig.querySelector(".rep");
     const stamp = fig.querySelector(".stamp");
@@ -1125,7 +1152,7 @@ document.querySelectorAll("section[id]").forEach(s => io.observe(s));
     svg.innerHTML = "";
     const r = rep.getBoundingClientRect();
     const beside = r.left > s.left + s.width / 2;
-    const wires = notes.map(cell => {
+    const wires = notes.filter(cell => cell.children.length).map(cell => {
       const c = cell.getBoundingClientRect();
       const x1 = c.left + c.width / 2 - s.left, y1 = c.top + c.height / 2 - s.top;
       const x2 = beside ? r.left - s.left : r.left + r.width / 2 - s.left;
@@ -1164,9 +1191,12 @@ document.querySelectorAll("section[id]").forEach(s => io.observe(s));
     tl.fromTo(flag, { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, "visit");
     caps.push(["days", "The same every project day."]);
     caps.push(["visit", "On 21 January the teachers look at the notes during the group visit and give feedback."]);
-    tl.addLabel("rest", "+=1.6");
-    for (let d = 3; d < 8; d++) day(d, d === 3 ? "rest" : ">+=0.05", 0.45);
-    caps.push(["rest", "Eight project days in Las Palmas, eight entries from the student and eight from the AI."]);
+    tl.addLabel("trip", "+=1.6");
+    tl.fromTo(trip, { autoAlpha: 0, scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, "trip");
+    caps.push(["trip", "22 January is the bus trip around the island and to the beach: no project work, so no notes."]);
+    tl.addLabel("rest", "+=1.8");
+    for (let d = 4; d < 8; d++) day(d, d === 4 ? "rest" : ">+=0.05", 0.45);
+    caps.push(["rest", "Seven project days in Las Palmas: seven entries from the student and seven from the AI."]);
 
     tl.addLabel("report", "+=0.8");
     tl.to(wires, { strokeDashoffset: 0, duration: 0.9, stagger: 0.07, ease: "power1.inOut" }, "report");

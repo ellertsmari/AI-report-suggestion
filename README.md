@@ -6,5 +6,6 @@ It builds on the AI Use Policy Addendum drafted by Heinz K (TECHCOLLEGE) in May 
 
 - **Presentation:** https://ellertsmari.github.io/AI-report-suggestion/
 - **Policy text (v2):** [AI-policy.md](AI-policy.md)
+- **Film (70 s, with sound and subtitles):** [film.mp4](film.mp4)
 
-`index.html` is a single self-contained page. Open it in a browser, or serve it with GitHub Pages from the `main` branch.
+`index.html` is a single self-contained page; the film sits next to it (`film.mp4`, `film.vtt`, `film-poster.jpg`). The film's source is kept separately, in the sustainable-island-film folder. Open it in a browser, or serve it with GitHub Pages from the `main` branch.
