@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sustainable Island AI Policy v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single scrolling briefing for a projector — sticky section bar, wide reading column, git-flavoured detail in mono */
+:root {
+  --bg: #eef3f2;
+  --surface: #ffffff;
+  --ink: #152024;
+  --muted: #52646a;
+  --line: #d3dedc;
+  --accent: #125f73;
+  --accent-soft: #dcecef;
+  --lava: #b8420f;
+  --lava-soft: #f9e6dc;
+  --moss: #3d6b35;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.7rem;
+  --step-3: clamp(2rem, 4.5vw, 3.1rem);
+  --step-4: clamp(2.4rem, 6vw, 4.2rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1517; --surface: #152125; --ink: #e3ecea; --muted: #97a9ad; --line: #283a3f;
+    --accent: #6cc3d3; --accent-soft: #1a3339; --lava: #f09062; --lava-soft: #3a2219; --moss: #8fc47f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1517; --surface: #152125; --ink: #e3ecea; --muted: #97a9ad; --line: #283a3f;
+  --accent: #6cc3d3; --accent-soft: #1a3339; --lava: #f09062; --lava-soft: #3a2219; --moss: #8fc47f;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.6;
+}
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: var(--step-3); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: var(--step-1); font-weight: 500; }
+p { margin: 0; }
+.wrap { max-width: 68rem; margin-inline: auto; padding-inline: max(16px, 4vw); }
+.eyebrow { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: var(--step-1); line-height: 1.5; color: var(--muted); max-width: 44rem; }
+.prose { max-width: 42rem; }
+
+/* Section bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.bar nav { display: flex; gap: 0.25rem; overflow-x: auto; padding-block: 0.6rem; scrollbar-width: none; }
+.bar nav::-webkit-scrollbar { display: none; }
+.bar a {
+  flex: none; font-size: var(--step--1); font-weight: 500; text-decoration: none; color: var(--muted);
+  padding: 0.35rem 0.7rem; border-radius: 999px;
+}
+.bar a:hover, .bar a.on { color: var(--ink); background: var(--accent-soft); }
+
+section { padding-block: clamp(3rem, 7vw, 5.5rem); border-top: 1px solid var(--line); }
+section > .wrap { display: grid; gap: 2rem; }
+.head { display: grid; gap: 0.9rem; }
+
+/* Hero */
+.hero { border-top: 0; padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 6vw, 4rem); }
+.hero h1 { font-size: var(--step-4); font-weight: 700; letter-spacing: -0.02em; max-width: 16ch; }
+.hero h1 span { color: var(--accent); }
+.hero .wrap { gap: 1.5rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 500; }
+.schools { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.school { font-size: var(--step--1); padding: 0.3rem 0.75rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+
+/* Three pillars */
+.pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.pillar { background: var(--surface); padding: 1.6rem; display: grid; gap: 0.7rem; align-content: start; min-width: 0; }
+.pillar h3 { font-size: var(--step-2); font-weight: 700; }
+.pillar ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.4rem; }
+.pillar .tag { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent); }
+.golden {
+  border-left: 4px solid var(--accent); padding: 0.4rem 0 0.4rem 1.25rem;
+  font-family: var(--font-display); font-size: var(--step-2); font-weight: 500; line-height: 1.25; max-width: 40rem;
+}
+.golden small { display: block; font-family: var(--font-body); font-size: var(--step--1); color: var(--muted); margin-top: 0.5rem; font-weight: 400; }
+
+/* Changes table */
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.97rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.9rem 1rem; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--font-mono); font-size: var(--step--1); font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+.changes { min-width: 50rem; }
+.changes td:first-child { font-weight: 600; white-space: nowrap; }
+.changes .v1 { color: var(--muted); }
+.changes .new { font-family: var(--font-mono); font-size: 0.75rem; color: var(--moss); border: 1px solid currentColor; border-radius: 4px; padding: 0 0.3rem; margin-left: 0.3rem; font-weight: 400; }
+.kept { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.kept span:not(.eyebrow) { padding: 0.3rem 0.75rem; border-radius: 999px; background: var(--accent-soft); font-size: var(--step--1); }
+
+/* Timeline */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.timeline li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1.25rem; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
+.timeline li:last-child { border-bottom: 0; }
+.timeline time { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent); padding-top: 0.2rem; font-variant-numeric: tabular-nums; }
+.timeline h3 { margin-bottom: 0.3rem; }
+.timeline p { color: var(--muted); max-width: 40rem; }
+.timeline .check { color: var(--lava); font-weight: 600; }
+@media (max-width: 34rem) { .timeline li { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+/* Report page mock */
+.browser { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; min-width: 0; }
+.chrome { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--line); background: var(--bg); }
+.dots { display: flex; gap: 0.35rem; flex: none; }
+.dots i { width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--line); display: block; }
+.url { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 0.2rem 0.6rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
+.report { display: grid; grid-template-columns: 15rem 1fr; min-height: 22rem; }
+.tabs { display: grid; align-content: start; gap: 0.15rem; padding: 0.9rem; border-right: 1px solid var(--line); }
+.tabs button {
+  font: inherit; font-size: 0.95rem; text-align: left; cursor: pointer; color: var(--muted);
+  background: none; border: 0; border-radius: 8px; padding: 0.55rem 0.7rem; display: flex; gap: 0.6rem;
+}
+.tabs button span { font-family: var(--font-mono); font-size: 0.78rem; padding-top: 0.12rem; }
+.tabs button:hover { background: var(--bg); color: var(--ink); }
+.tabs button[aria-selected="true"] { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
+.panel { padding: 1.5rem 1.75rem; display: grid; gap: 0.9rem; align-content: start; min-width: 0; }
+.panel h3 { font-size: var(--step-2); font-weight: 700; }
+.panel .why { color: var(--muted); }
+.example { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); border: 1px dashed var(--line); border-radius: 4px; padding: 0.1rem 0.4rem; justify-self: start; }
+.entry { border: 1px solid var(--line); border-radius: 10px; padding: 0.9rem 1rem; display: grid; gap: 0.35rem; }
+.entry.wrong { border-color: color-mix(in srgb, var(--lava) 45%, var(--line)); background: var(--lava-soft); }
+.entry .sha { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); }
+.entry.wrong .label { color: var(--lava); font-weight: 600; }
+.entries { display: grid; gap: 0.6rem; }
+@media (max-width: 44rem) {
+  .report { grid-template-columns: 1fr; }
+  .tabs { border-right: 0; border-bottom: 1px solid var(--line); grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; }
+}
+
+/* AI account */
+.pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: 1.25rem; }
+.file { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; min-width: 0; display: grid; grid-template-rows: auto 1fr; }
+.file header { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.6rem 1rem; border-bottom: 1px solid var(--line); background: var(--bg); font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+.file pre { margin: 0; padding: 1rem 1.1rem; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.prompt { border: 1px solid var(--accent); border-radius: 14px; background: var(--accent-soft); padding: 1.25rem 1.4rem; display: grid; gap: 0.9rem; }
+.prompt blockquote { margin: 0; font-size: var(--step-1); line-height: 1.45; font-style: italic; }
+.btn {
+  font: inherit; font-size: var(--step--1); font-weight: 600; cursor: pointer; justify-self: start;
+  color: var(--surface); background: var(--accent); border: 0; border-radius: 8px; padding: 0.5rem 0.9rem;
+}
+.btn:hover { filter: brightness(1.08); }
+
+/* Rubric */
+.rubric { min-width: 56rem; font-size: 0.92rem; }
+.rubric th { text-align: center; }
+.rubric th:first-child, .rubric td:first-child { text-align: left; width: 8rem; }
+.rubric td { border-left: 1px solid var(--line); }
+.rubric td:first-child { border-left: 0; font-weight: 600; }
+.rubric .scale td { font-family: var(--font-mono); text-align: center; font-variant-numeric: tabular-nums; background: var(--bg); }
+.rubric .scale td:first-child { text-align: left; font-family: var(--font-body); }
+.note { color: var(--muted); max-width: 44rem; }
+
+/* Evidence */
+.evidence { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1.25rem; }
+.fact { border-top: 3px solid var(--accent); padding-top: 1rem; display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
+.fact .num { font-family: var(--font-display); font-size: var(--step-3); font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+.fact .src { font-size: var(--step--1); color: var(--muted); }
+
+/* Meeting */
+.agenda { list-style: none; margin: 0; padding: 0; counter-reset: q; display: grid; gap: 0.9rem; }
+.agenda li { counter-increment: q; display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.25rem; }
+.agenda li::before { content: counter(q); font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; color: var(--accent); line-height: 1; }
+.agenda h3 { margin-bottom: 0.35rem; }
+.agenda p { color: var(--muted); }
+.agenda .who { font-family: var(--font-mono); font-size: 0.78rem; color: var(--moss); margin-top: 0.4rem; }
+
+/* Full text */
+details.full { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+details.full summary { cursor: pointer; padding: 1.1rem 1.4rem; font-weight: 600; list-style-position: inside; }
+.policy { padding: 0 1.4rem 1.6rem; display: grid; gap: 0.9rem; max-width: 48rem; }
+.policy h2 { font-size: var(--step-2); margin-top: 1rem; }
+.policy h3 { font-size: var(--step-1); font-weight: 700; margin-top: 0.4rem; }
+.policy hr { border: 0; border-top: 1px solid var(--line); width: 100%; margin: 0.5rem 0; }
+.policy ul, .policy ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.3rem; }
+.policy blockquote { margin: 0; padding: 0.6rem 1rem; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 8px 8px 0; }
+.policy blockquote p + p, .policy blockquote ul { margin-top: 0.4rem; }
+.policy table { font-size: 0.88rem; }
+.policy .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+.policy .tablewrap table { min-width: 40rem; }
+
+footer { border-top: 1px solid var(--line); padding-block: 2.5rem 3.5rem; }
+footer .wrap { display: grid; gap: 1rem; }
+footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-size: var(--step--1); color: var(--muted); max-width: 52rem; }
+
+/* Heinz's draft */
+.credits { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
+.credit { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem 1.3rem; display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
+.credit h3 { font-weight: 700; }
+.credit q { font-style: italic; }
+.credit .then { font-size: var(--step--1); color: var(--moss); }
+.byline { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+
+/* Changes table: quoted draft text */
+.changes q { font-style: italic; }
+.changes .sec { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+
+/* Two items and their parts */
+.items { min-width: 56rem; font-size: 0.92rem; }
+.items th { text-align: center; }
+.items th:first-child, .items td:first-child { text-align: left; width: 11rem; }
+.items td { border-left: 1px solid var(--line); }
+.items td:first-child { border-left: 0; font-weight: 600; }
+.items td:first-child small { display: block; font-weight: 400; color: var(--muted); font-size: 0.8rem; margin-top: 0.25rem; }
+.items .scale td { font-family: var(--font-mono); text-align: center; font-variant-numeric: tabular-nums; background: var(--bg); }
+.items .scale td:first-child { text-align: left; font-family: var(--font-body); }
+.parts { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
+.part { border: 1px dashed var(--line); border-radius: 12px; padding: 1.1rem 1.25rem; display: grid; gap: 0.6rem; min-width: 0; }
+.part ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.3rem; }
+
+/* When to assess */
+.subhead { display: grid; gap: 0.6rem; margin-top: 1rem; }
+.subhead h3 { font-size: var(--step-2); font-weight: 700; }
+.options { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1rem; }
+.opt { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.3rem 1.4rem; display: grid; gap: 0.8rem; align-content: start; min-width: 0; }
+.opt .tag { font-family: var(--font-mono); font-size: var(--step--1); color: var(--accent); }
+.opt h4 { margin: 0; font-family: var(--font-display); font-size: var(--step-1); font-weight: 700; line-height: 1.2; }
+.opt dl { margin: 0; display: grid; gap: 0.6rem; }
+.opt dt { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.opt dt.for { color: var(--moss); }
+.opt dt.against { color: var(--lava); }
+.opt dd { margin: 0; }
+.opt dd ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.3rem; }
+.suggest { border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 14px; padding: 1.3rem 1.4rem; display: grid; gap: 0.7rem; }
+.suggest ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.3rem; }
+
+/* Full rubric */
+.stage { display: grid; gap: 0.8rem; }
+.stage h3 { font-weight: 700; }
+.stage h3 span { font-family: var(--font-mono); font-size: var(--step--1); font-weight: 400; color: var(--muted); margin-left: 0.5rem; }
+.full-rubric { min-width: 60rem; font-size: 0.88rem; }
+.full-rubric th { text-align: center; }
+.full-rubric th:first-child, .full-rubric td:first-child { text-align: left; width: 10rem; }
+.full-rubric td { border-left: 1px solid var(--line); }
+.full-rubric td:first-child { border-left: 0; font-weight: 600; }
+.full-rubric .scale td { font-family: var(--font-mono); text-align: center; background: var(--bg); font-variant-numeric: tabular-nums; }
+.full-rubric .scale td:first-child { text-align: left; font-family: var(--font-body); }
+.full-rubric tr.added td { background: var(--accent-soft); }
+.full-rubric tr.option td { background: transparent; border-top: 1px dashed var(--accent); border-bottom: 1px dashed var(--accent); }
+.badge { display: inline-block; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; border: 1px solid currentColor; border-radius: 4px; padding: 0 0.3rem; margin-top: 0.3rem; }
+.badge.new { color: var(--moss); }
+.badge.opt-a, .badge.opt-b { color: var(--accent); }
+.legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: var(--step--1); color: var(--muted); align-items: center; }
+.full-rubric td:first-child small { display: block; font-weight: 400; color: var(--muted); font-size: 0.78rem; margin-top: 0.2rem; }
+</style>
+</head>
+<body>
+<div class="bar">
+  <nav class="wrap" aria-label="Sections">
+    <a href="#summary">Summary</a>
+    <a href="#draft">Heinz's draft</a>
+    <a href="#changes">What v2 adds</a>
+    <a href="#month">Timeline</a>
+    <a href="#report">AI report</a>
+    <a href="#notes">Daily notes</a>
+    <a href="#rubric">Rubric items</a>
+    <a href="#when">When to assess</a>
+    <a href="#full">Full rubric</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#meeting">For the meeting</a>
+    <a href="#fulltext">Full text</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">The Sustainable Island 2027 · AI Use Policy, version 2</p>
+    <h1>Use AI freely. <span>Own every line.</span> Show your work.</h1>
+    <p class="lead">A proposal for the teachers' meeting on 2 October 2026. It builds on Heinz's draft from May. His principle, structure and most of his wording stay. v2 adds how students record their AI use, what they hand in, and how we grade it.</p>
+    <div class="schools" aria-label="Partner schools">
+      <span class="school">I.E.S. El Rincón · Las Palmas</span>
+      <span class="school">Tækniskólinn · Reykjavík</span>
+      <span class="school">TECHCOLLEGE · Aalborg</span>
+    </div>
+    <div class="meta">
+      <span>Policy text <a href="https://github.com/ellertsmari/AI-report-suggestion/blob/main/AI-policy.md"><b>AI-policy.md</b></a></span>
+      <span>Proposed for <b>code-voyagers3/CodeVoyagers</b> as <b>Assignment/AI-policy.md</b></span>
+    </div>
+  </div>
+</header>
+
+<section id="summary">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Summary</p>
+      <h2>Three things every student needs to know</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <span class="tag">Allowed</span>
+        <h3>Any AI, any part</h3>
+        <ul>
+          <li>Any tool, including an agent that builds features while the student directs and reviews it</li>
+          <li>One exception: design sprint interviews are with real people</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <span class="tag">Required</span>
+        <h3>Notes, kept daily</h3>
+        <ul>
+          <li>A few daily bullet points: what the AI got wrong, what changed, what was learned</li>
+          <li>A daily account written by the AI itself from its session history</li>
+          <li>A team AI report built from both</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <span class="tag">Graded</span>
+        <h3>Two rubric items</h3>
+        <ul>
+          <li><b>Understanding your code:</b> each student walks a teacher through their own code</li>
+          <li><b>The AI report:</b> each team's report and notes, after the project</li>
+          <li>We grade how critically students used AI, not how much</li>
+        </ul>
+      </div>
+    </div>
+    <p class="golden">If you cannot explain a line of code to your teacher or a teammate, it does not belong in your project.<small>The Golden Rule from Heinz's draft, unchanged in v2.</small></p>
+  </div>
+</section>
+
+<section id="draft">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Where v2 starts</p>
+      <h2>Heinz's draft set the foundation</h2>
+      <p class="lead">In May, Heinz wrote the first shared AI policy for the Sustainable Island. Until then each school handled AI on its own. The draft settled the key question: students may use AI, and what we assess is whether they understand what they hand in. v2 would not exist without it.</p>
+      <div class="byline"><span>AI Use Policy Addendum</span><span>Heinz K · TECHCOLLEGE</span><span>11 May 2026 · PR #124</span></div>
+    </div>
+    <div class="credits">
+      <div class="credit"><h3>AI is encouraged</h3><p><q>Students are encouraged to use AI — but must maintain genuine understanding of every line of code they submit.</q></p><p class="then">Kept word for word</p></div>
+      <div class="credit"><h3>The core requirement</h3><p><q>It does not matter whether code was written by the student, a teammate, or an AI. Every student must be able to explain any code within their area of contribution.</q></p><p class="then">Kept word for word. The first new rubric item grades exactly this.</p></div>
+      <div class="credit"><h3>Commit ownership</h3><p>Read, understand and, if needed, modify AI-generated code before committing it.</p><p class="then">Kept, with one addition: leave the Co-Authored-By lines that agents add</p></div>
+      <div class="credit"><h3>A log of AI use</h3><p>What you asked, what the AI returned, what you changed and why, what you learned.</p><p class="then">The same four questions become the daily notes</p></div>
+      <div class="credit"><h3>Checking by talking</h3><p>Code reviews, spot checks and the final presentation, rather than trusting a written declaration.</p><p class="then">The research backs this choice. v2 builds the walkthrough on it.</p></div>
+      <div class="credit"><h3>Not a punishment</h3><p><q>This is not a punishment — it is a way to make sure the project is a real learning experience.</q></p><p class="then">Kept word for word, together with the integrity checklist</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="changes">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Draft → v2</p>
+      <h2>What v2 adds and adjusts</h2>
+      <p class="lead">The changes do two things. They make every requirement something we can assess, and they add the AI report, so students practise using AI to explain and compare their work.</p>
+    </div>
+    <div class="scroll">
+      <table class="changes">
+        <thead><tr><th scope="col">Area</th><th scope="col">Draft</th><th scope="col">v2</th><th scope="col">Why</th></tr></thead>
+        <tbody>
+          <tr><td>Permitted use</td><td class="v1">Five permitted uses: boilerplate, concepts, exploring approaches, reviewing own code, documentation and comments</td><td>The same five, now as examples, plus: building features with an AI agent, and generating reports, explanations and visual comparisons</td><td>It benefits the whole group. Students learn to use AI to generate reports, explain complex topics and compare solutions in a visual, easy-to-understand way</td></tr>
+          <tr><td>Comments</td><td class="v1"><span class="sec">§2</span> AI may <q>help write documentation and comments</q>. <span class="sec">§4.1</span> <q>AI-generated comments are not acceptable</q></td><td>Keeps §2 and removes the §4.1 rule. The walkthrough with a teacher checks understanding instead</td><td>The two sections contradict each other, so one had to go. We also cannot tell who wrote a comment. The walkthrough checks the same thing §4.1 was after, that the student understands the code, in a way we can grade</td></tr>
+          <tr><td>AI log</td><td class="v1">For each interaction: what you asked, what it returned, what you changed, what you learned</td><td>The same questions answered once a day, plus an account written by the AI itself, both committed to <code>report/notes/</code></td><td>An agent session can have hundreds of interactions. A daily entry is realistic, and git shows when it was written</td></tr>
+          <tr><td>Teach-back</td><td class="v1">Explain AI code to a teammate before merging. Listed as an assessment method</td><td>Kept as a recommended habit. Removed from the assessment</td><td>We have no way to assess it</td></tr>
+          <tr><td>Code reviews</td><td class="v1">10–15 min walkthrough with a teacher or a peer</td><td>With a teacher. Counts toward Understanding your code, together with the walkthrough</td><td>Only what a teacher sees can count toward a grade</td></tr>
+          <tr><td>Interviews<span class="new">new</span></td><td class="v1">Not covered</td><td>Design sprint interviews must be with real people</td><td>The problem has to come from real users, not generated ones</td></tr>
+          <tr><td>AI report<span class="new">new</span></td><td class="v1">Not covered</td><td><code>report/index.html</code> with six sections, built with AI from the notes</td><td>Students practise turning their work into a clear, visual report. Other teams learn from it</td></tr>
+          <tr><td>Grading</td><td class="v1">Methods listed, no rubric item</td><td>Two rubric items: Understanding your code and The AI report</td><td>Every requirement in the policy now has a place in the grade</td></tr>
+          <tr><td>Penalties</td><td class="v1"><q>This is not a punishment</q></td><td>Kept. Adds: declared AI use is never penalised, and no AI detectors are used</td><td>Fear of penalties is the main reason students hide AI use</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="month">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">January 2027</p>
+      <h2>The policy during the project</h2>
+    </div>
+    <ol class="timeline">
+      <li><time>11–15 Jan</time><div><h3>Online design sprint</h3><p>Teams interview real people. AI can help prepare the questions and sort the notes. Each student starts a notes file in the team repository.</p></div></li>
+      <li><time>18 Jan</time><div><h3>Meetup in Las Palmas</h3><p>Teams set up <code>report/notes/</code> and agree who owns which part of the code.</p></div></li>
+      <li><time>19–28 Jan</time><div><h3>Project work</h3><p>Every day: students commit their notes and the AI's account. Teachers run code reviews and spot checks, which count toward Understanding your code.</p></div></li>
+      <li><time>21 Jan</time><div><h3>Presentation of design and GitHub</h3><p>Design, Design Sprint, UI and GitHub are graded. Teachers check that the notes are being committed and give feedback (not graded). <span class="check">Option A:</span> Understanding your code is graded here.</p></div></li>
+      <li><time>29 Jan</time><div><h3>Final presentation</h3><p>Product, Presentation and Q&amp;A are graded. Teams submit the link to their AI report. <span class="check">Option B:</span> Understanding your code is graded here.</p></div></li>
+      <li><time>After</time><div><h3>Post assessment</h3><p>Teachers review the front end and back end code, and grade The AI report alongside it.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="report">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Team deliverable</p>
+      <h2>The AI report</h2>
+      <p class="lead">A web page in the team repository, published with the app. Students use AI to build it from their notes. Turning work into a clear report, explaining complex topics and comparing solutions visually are the skills we want them to practise, and every other team can learn from the result.</p>
+    </div>
+    <div class="browser">
+      <div class="chrome"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="url">team-repo / report / index.html</span></div>
+      <div class="report">
+        <div class="tabs" role="tablist" aria-label="AI report sections" id="tabs"></div>
+        <div class="panel" role="tabpanel" id="panel" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="note">The entries shown are invented examples of the content we expect. Section 4, “What the AI got wrong”, is the most valuable part: it shows the students checked the AI's work.</p>
+  </div>
+</section>
+
+<section id="notes">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Daily, in the repository</p>
+      <h2>The student's notes and the AI's own account</h2>
+      <p class="lead">Heinz's log asks four good questions: what you asked, what came back, what you changed, what you learned. v2 asks them once a day instead of after every interaction, and adds an account the AI writes about itself. The two files check each other.</p>
+    </div>
+    <div class="prompt">
+      <p class="eyebrow">The prompt students use</p>
+      <blockquote id="prompt-text">Go through our sessions from today and the git log. Write a short, factual account: what you built or changed (with commit hashes), what I asked you to explain, where you were wrong and how it was caught, and what I changed in your code. Do not flatter me.</blockquote>
+      <button class="btn" id="copy" type="button">Copy prompt</button>
+    </div>
+    <div class="pair">
+      <div class="file">
+        <header><span>report/notes/student.md</span><span class="example">Example</span></header>
+<pre>## Tuesday 19 January
+- Asked for the recycling map. It put our API
+  key in a VITE_ variable, so it was visible
+  in the browser.
+- Changed: moved the key to the server
+  (e18a0b7), because anyone could copy it.
+- Did not understand useEffect cleanup.
+  Learned it from two explanations, then
+  rewrote the fetch with AbortController.
+- Decided on Postgres, not MongoDB as the AI
+  suggested: our data is all related.</pre>
+      </div>
+      <div class="file">
+        <header><span>report/notes/student-ai.md</span><span class="example">Example</span></header>
+<pre>## AI account, Tuesday 19 January
+- Built the recycling map component (a41c9e2)
+  and the /api/points CRUD routes (7d03b18).
+- Explained useEffect cleanup twice. The
+  student rewrote the fetch (c92f4d1).
+- Wrong: I put the API key in a VITE_ variable,
+  which exposes it in the browser. Caught by the
+  student; moved to the server (e18a0b7).
+- Changed by the student: I trusted the user id
+  sent by the client. The server now reads it
+  from the token.</pre>
+      </div>
+    </div>
+    <p class="note">Raw transcripts are not committed, because they can contain personal data and secret keys. Students keep them until grades are given, and a teacher may ask to see the relevant part during a code review. Tools without session history, such as a browser chat, get one line in the student's own notes.</p>
+  </div>
+</section>
+
+<section id="rubric">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Two new rubric items</p>
+      <h2>Understanding your code, and The AI report</h2>
+      <p class="lead">Two separate items, because they measure different things. One is about each student, the other about what the team produced. Both use the bands we already use.</p>
+    </div>
+    <div class="scroll">
+      <table class="items">
+        <thead><tr><th scope="col">10-point</th><th scope="col">0–2</th><th scope="col">3–4</th><th scope="col">5–6</th><th scope="col">7–8</th><th scope="col">9–10</th></tr></thead>
+        <tbody>
+          <tr class="scale"><td>7-point</td><td>02</td><td>4</td><td>7</td><td>10</td><td>12</td></tr>
+          <tr class="scale"><td>Meaning</td><td>Missing</td><td>Bad</td><td>Mediocre</td><td>Expected</td><td>Exceeding</td></tr>
+          <tr><td>Understanding your code<small>Each student</small></td><td>Cannot explain own code</td><td>Explains own code only with help</td><td>Explains what most of own code does, but not why, or struggles with follow-up questions</td><td>Explains own code with confidence, including why it is built that way, and answers follow-up questions</td><td>Explains the trade-offs and alternatives, and can change or debug the code on the spot</td></tr>
+          <tr><td>The AI report<small>Each team, with notes and a tutorial per student</small></td><td>No report page or notes</td><td>Thin report. The git history shows the notes were written at the end</td><td>All sections present. Notes on most days. Some AI mistakes documented</td><td>Notes every day, tied to commits. Clear decision log with visual comparisons. AI mistakes documented with the commits that fixed them. Every tutorial is clear</td><td>Catches subtle mistakes (security, outdated or invented APIs). Backs comparisons with real measurements. Tutorials teach other students something new</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="parts">
+      <div class="part"><p class="eyebrow">Understanding your code could be split into</p><ul><li>What the code does</li><li>Why it is built that way, and the alternatives</li><li>Changing or debugging it on the spot</li></ul></div>
+      <div class="part"><p class="eyebrow">The AI report could be split into</p><ul><li>Notes and AI accounts, kept during the project</li><li>Decision log and visual comparisons</li><li>What the AI got wrong</li><li>Tutorials</li></ul></div>
+    </div>
+    <p class="note">Understanding your code is graded per student. The current rubric grades the team, and peer evaluation adjusts each student's grade. We need to agree how an individual item fits into that.</p>
+  </div>
+</section>
+
+<section id="when">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">For discussion</p>
+      <h2>When do we judge each item?</h2>
+    </div>
+    <div class="subhead"><h3>Understanding your code: 21 or 29 January?</h3><p class="note">3–5 minutes per student. One teacher can see 12–20 students in an hour.</p></div>
+    <div class="options">
+      <div class="opt">
+        <span class="tag">Option A · 21 January</span>
+        <h4>With the design, UI and GitHub assessment</h4>
+        <dl>
+          <dt class="for">For</dt>
+          <dd><ul><li>Students get the result while there is still time to change how they work</li><li>The final presentation day stays as it is</li><li>The code is fresh in their minds</li></ul></dd>
+          <dt class="against">Against</dt>
+          <dd><ul><li>Only a few days of code exist</li><li>It judges the start of the project, not what was shipped</li><li>Students who own later features have little to show yet</li></ul></dd>
+        </dl>
+      </div>
+      <div class="opt">
+        <span class="tag">Option B · 29 January</span>
+        <h4>With the final presentation</h4>
+        <dl>
+          <dt class="for">For</dt>
+          <dd><ul><li>All the code exists, so it checks what was actually shipped</li><li>It extends the Q&amp;A the presentation already has</li></ul></dd>
+          <dt class="against">Against</dt>
+          <dd><ul><li>It adds 3–5 minutes per student to a day that is already full</li><li>No time to improve afterwards</li><li>Students are tired and nervous on the last day</li></ul></dd>
+        </dl>
+      </div>
+    </div>
+    <div class="subhead"><h3>The AI report: after the project</h3></div>
+    <div class="suggest">
+      <p class="eyebrow">Suggestion</p>
+      <p><b>Grade The AI report in the post assessment, together with the thorough review of the front end and back end code.</b></p>
+      <ul>
+        <li>The report is only finished at the end of the project</li>
+        <li>Teachers review the code at that point anyway, and the report explains that code</li>
+        <li>The git history of the notes is complete, so we can see whether they were kept day by day</li>
+        <li>It takes no time from the weeks in Las Palmas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="full">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">In context</p>
+      <h2>The full rubric with the new items</h2>
+      <p class="lead">The current items and descriptions from the March 2026 assessment, with the two new items where we suggest they go.</p>
+      <div class="legend"><span><span class="badge new">New</span> new item</span><span><span class="badge opt-a">Option A</span> / <span class="badge opt-b">Option B</span> Understanding your code goes in one of these two places</span></div>
+    </div>
+    <div class="stage">
+      <h3>Design sprint, UI and GitHub<span>21 January</span></h3>
+      <div class="scroll"><table class="full-rubric">
+        <thead><tr><th scope="col">10-point</th><th scope="col">0–2</th><th scope="col">3–4</th><th scope="col">5–6</th><th scope="col">7–8</th><th scope="col">9–10</th></tr></thead>
+        <tbody>
+          <tr class="scale"><td>7-point</td><td>02</td><td>4</td><td>7</td><td>10</td><td>12</td></tr>
+          <tr class="scale"><td>Meaning</td><td>Missing</td><td>Bad</td><td>Mediocre</td><td>Expected</td><td>Exceeding</td></tr>
+          <tr><td>Design</td><td>It looks like they did not think about design at all</td><td>It looked like the UI was all over the place with no clear focus</td><td>The UI had some structure and UX was tolerable</td><td>The UI had a good hierarchy and made sense. The UX was pleasant</td><td>The UI was very pleasant to look at and the UX was like a dream</td></tr>
+          <tr><td>Design Sprint</td><td>The group did not do a design sprint</td><td>It was poorly done and missing some key aspects</td><td>It was done but could have been more useful for the project</td><td>It was a good design sprint that guided the project</td><td>The project solves a real problem with great UX</td></tr>
+          <tr><td>UI - Figma/XD</td><td>There was no design document</td><td>There was some design but it was poorly made and did not look like the final project at all</td><td>All the pages had been designed but could have had more structure</td><td>It was a well designed project file and the design guided the final outcome</td><td>The design was very clean and professionally made</td></tr>
+          <tr><td>GitHub</td><td>They did not use Git in the project</td><td>Only one branch and rarely committed</td><td>Branches were used but commits and pull requests could have been more frequent</td><td>The GitHub guide was followed as expected</td><td>They used GitHub to its full potential and the project benefited from great management</td></tr>
+          <tr class="option"><td>Understanding your code<small>Each student</small><br><span class="badge opt-a">Option A</span></td><td>Cannot explain own code</td><td>Explains own code only with help</td><td>Explains what most of own code does, but not why, or struggles with follow-up questions</td><td>Explains own code with confidence, including why it is built that way, and answers follow-up questions</td><td>Explains the trade-offs and alternatives, and can change or debug the code on the spot</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="stage">
+      <h3>Final presentation<span>29 January</span></h3>
+      <div class="scroll"><table class="full-rubric">
+        <thead><tr><th scope="col">10-point</th><th scope="col">0–2</th><th scope="col">3–4</th><th scope="col">5–6</th><th scope="col">7–8</th><th scope="col">9–10</th></tr></thead>
+        <tbody>
+          <tr class="scale"><td>7-point</td><td>02</td><td>4</td><td>7</td><td>10</td><td>12</td></tr>
+          <tr class="scale"><td>Meaning</td><td>Missing</td><td>Bad</td><td>Mediocre</td><td>Expected</td><td>Exceeding</td></tr>
+          <tr><td>Product</td><td>There was no product</td><td>It was not live and/or hardly useable</td><td>It was live but barely an MVP</td><td>It was good and worked how it should</td><td>It was a amazing to see how much they had accomplished in this time frame</td></tr>
+          <tr><td>Presentation</td><td>There was no presentation</td><td>It was unorganized and hard to follow</td><td>It showed what they had done but could have been more clear</td><td>It was clear and showed the collaboration and the project in a clear way</td><td>It was an exceptional presentation that kept me focused the whole time</td></tr>
+          <tr><td>Q&amp;A</td><td>There was no Q&amp;A session</td><td>The Q&amp;A session was poorly handled and did not address key questions</td><td>The Q&amp;A session addressed some questions but lacked depth</td><td>The Q&amp;A session was well-handled and addressed most of the key questions</td><td>The Q&amp;A session was exceptional, addressing all key questions thoroughly and engaging the audience</td></tr>
+          <tr class="option"><td>Understanding your code<small>Each student</small><br><span class="badge opt-b">Option B</span></td><td>Cannot explain own code</td><td>Explains own code only with help</td><td>Explains what most of own code does, but not why, or struggles with follow-up questions</td><td>Explains own code with confidence, including why it is built that way, and answers follow-up questions</td><td>Explains the trade-offs and alternatives, and can change or debug the code on the spot</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="stage">
+      <h3>Post assessment<span>after the project</span></h3>
+      <div class="scroll"><table class="full-rubric">
+        <thead><tr><th scope="col">10-point</th><th scope="col">0–2</th><th scope="col">3–4</th><th scope="col">5–6</th><th scope="col">7–8</th><th scope="col">9–10</th></tr></thead>
+        <tbody>
+          <tr class="scale"><td>7-point</td><td>02</td><td>4</td><td>7</td><td>10</td><td>12</td></tr>
+          <tr class="scale"><td>Meaning</td><td>Missing</td><td>Bad</td><td>Mediocre</td><td>Expected</td><td>Exceeding</td></tr>
+          <tr><td>Front end</td><td>The project did not have any front end</td><td>Only a static page with poorly written code</td><td>Some variable naming and/or folder structure problems</td><td>It looks good and well organized</td><td>It was surprisingly well organized, documented and readable</td></tr>
+          <tr><td>Back end</td><td>The project did not have any back end</td><td>It is very simple, unfinished and/or unorganized</td><td>It has some functionality but was missing error handling or security issues</td><td>It is a well organized code that took good care of serving data to the front end</td><td>It is extremely well written, secure and the errors are well handled</td></tr>
+          <tr class="added"><td>The AI report<small>Each team, with notes and a tutorial per student</small><br><span class="badge new">New</span></td><td>No report page or notes</td><td>Thin report. The git history shows the notes were written at the end</td><td>All sections present. Notes on most days. Some AI mistakes documented</td><td>Notes every day, tied to commits. Clear decision log with visual comparisons. AI mistakes documented with the commits that fixed them. Every tutorial is clear</td><td>Catches subtle mistakes (security, outdated or invented APIs). Backs comparisons with real measurements. Tutorials teach other students something new</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Research, 2023–2026</p>
+      <h2>Why notes and a conversation, rather than a declaration</h2>
+    </div>
+    <div class="evidence">
+      <div class="fact"><span class="num">74%</span><p>of students at King's Business School did not declare their AI use, even though the coursework coversheet required it. They feared penalties and found the rules unclear.</p><span class="src">Gonsalves, Assessment &amp; Evaluation in Higher Education, 2025 [1]</span></div>
+      <div class="fact"><span class="num">0 → 66%</span><p>of student repositories named an AI tool across three cohorts (203 repositories, 23,065 commits). Saying what the AI actually contributed stayed rare.</p><span class="src">Parreira, Sinha, Sandhaus &amp; Ju, 2026 [2]</span></div>
+      <div class="fact"><span class="num">61%</span><p>of essays by non-native English writers were wrongly flagged as AI-written by detectors. Every student in this project writes in a second language.</p><span class="src">Liang et al., Patterns, 2023 [3]</span></div>
+      <div class="fact"><span class="num">Rules</span><p>that only tell students what they may do create an “enforcement illusion”. What works is changing the assessment itself, so the task checks the skill.</p><span class="src">Corbin, Dawson &amp; Liu, Assessment &amp; Evaluation in Higher Education, 2025 [4]</span></div>
+      <div class="fact"><span class="num">Talk</span><p>Short code interviews scaled across weekly TA sections and got students discussing their own programs. The walkthrough in Understanding your code uses the same idea.</p><span class="src">Kannam, Yang, Dharm &amp; Lin, SIGCSE 2025 [5]</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="meeting">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">2 October 2026</p>
+      <h2>What we need to decide</h2>
+    </div>
+    <ol class="agenda">
+      <li><div><h3>Adopt v2 as the common policy for 2027?</h3><p>Or agree on changes, and merge the branch once they are in.</p></div></li>
+      <li><div><h3>Does v2 fit each school's own rules?</h3><p>In Danish vocational programmes, AI is not a permitted aid in exams or exam preparation unless the programme's fagbilag allows it [6]. TECHCOLLEGE: does any part of the project count as an exam? El Rincón: are there Spanish or Canarian rules to add?</p><p class="who">TECHCOLLEGE · El Rincón</p></div></li>
+      <li><div><h3>When do we grade Understanding your code?</h3><p>On 21 January with the design, UI and GitHub assessment, or on 29 January with the final presentation. Either way: how do we split the students between the teachers?</p></div></li>
+      <li><div><h3>The AI report in the post assessment?</h3><p>And do we keep each new item as one grade, or split them into the smaller parts?</p></div></li>
+      <li><div><h3>How does an individual item fit with team grades?</h3><p>Understanding your code is per student. Today the team gets a grade and peer evaluation adjusts it for each student.</p></div></li>
+      <li><div><h3>LMS changes</h3><p>A link to the AI report in the team hub, the two new items in the teacher evaluation, and a per-student score for Understanding your code.</p><p class="who">Tækniskólinn can build this</p></div></li>
+      <li><div><h3>Transcripts and personal data</h3><p>v2 asks students to keep their raw transcripts until grades are given. Do we agree on that, and on when they are deleted?</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="fulltext">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Assignment/AI-policy.md</p>
+      <h2>The full v2 text</h2>
+    </div>
+    <details class="full">
+      <summary>Show the policy as students will read it</summary>
+      <div class="policy">
+<h2>1. Purpose</h2>
+<p>This document defines how AI tools may be used in The Sustainable Island 2027 project. Students are encouraged to use AI — but must maintain genuine understanding of every line of code they submit.</p>
+<blockquote>
+<p><strong>AI is a learning tool, not a replacement for understanding.</strong></p>
+</blockquote>
+<p>The policy is the same for every student in the project, whatever school you come from. Your own school's exam rules still apply on top of it. If you are unsure, ask your teacher.</p>
+<hr />
+<h2>2. Permitted AI Use</h2>
+<p>Students may use AI tools (ChatGPT, GitHub Copilot, Claude, etc.) in every part of the project. For example, to:</p>
+<ul>
+<li>Generate boilerplate code or starter templates</li>
+<li>Understand concepts, syntax, or error messages</li>
+<li>Explore approaches to a technical problem</li>
+<li>Review and improve code they have already written</li>
+<li>Help write documentation and comments</li>
+<li>Build features with an AI agent that you direct, run and review</li>
+<li>Generate reports, explanations of complex topics, and visual comparisons of different solutions</li>
+</ul>
+<p><strong>One exception: the interviews in the design sprint.</strong> The problem your team solves must come from talking to real people. AI may help you prepare questions and sort your notes, but it must never invent interviews, answers or users.</p>
+<hr />
+<h2>3. The Core Requirement</h2>
+<p>It does not matter whether code was written by the student, a teammate, or an AI. Every student must be able to explain any code within their area of contribution.</p>
+<blockquote>
+<h3>The Golden Rule</h3>
+<p>If you cannot explain a line of code to your teacher or a teammate, it does not belong in your project.</p>
+</blockquote>
+<p>Understanding will be checked through code reviews, a walkthrough with a teacher, and unannounced spot-checks.</p>
+<hr />
+<h2>4. What Is Required When Using AI</h2>
+<h3>4.1 AI Notes (every project day)</h3>
+<p>Each student keeps a notes file in the team repository: <code>report/notes/&lt;your-name&gt;.md</code>. Add to it and commit it at the end of every project day. A few bullet points per day is enough:</p>
+<ul>
+<li>What you asked the AI to do, and what it got wrong</li>
+<li>What you changed and why</li>
+<li>What you did not understand, and what you learned</li>
+<li>Decisions you made (including suggestions from the AI that you did not follow)</li>
+</ul>
+<p>These notes become your team's AI report (section 5).</p>
+<h3>4.2 The AI's Own Account (every project day)</h3>
+<p>Most AI agents keep a history of your sessions. At the end of each project day, ask your agent to write an account of how it was used, and commit it as <code>report/notes/&lt;your-name&gt;-ai.md</code>. You can use this prompt:</p>
+<blockquote>
+<p><em>Go through our sessions from today and the git log. Write a short, factual account: what you built or changed (with commit hashes), what I asked you to explain, where you were wrong and how it was caught, and what I changed in your code. Do not flatter me.</em></p>
+</blockquote>
+<p>If you used a tool without history (for example a chat in the browser or on your phone), add one line about it to your own notes.</p>
+<p>Do not commit raw chat transcripts. They can contain personal data or secret keys. Keep them until grades are given; a teacher may ask to see the relevant part during a code review.</p>
+<h3>4.3 Commit Ownership</h3>
+<p>You must be able to explain every commit you have made. Read, understand, and if needed modify AI-generated code before you commit it. If your tool adds a line such as <code>Co-Authored-By</code> to a commit, leave it there.</p>
+<h3>4.4 Team Review Before Merge (recommended)</h3>
+<p>Before merging AI-generated code, explain it to at least one teammate. If you cannot explain it, it is not ready to merge. This is a habit we recommend. It is not graded.</p>
+<hr />
+<h2>5. The AI Report</h2>
+<p>Each team publishes an AI report as a web page, <code>report/index.html</code> in the repository, and submits its link together with the other project links. Use your AI to build it from your notes: turning your work into a clear, visual report is part of the exercise. The report has these sections:</p>
+<ol>
+<li><strong>Try it</strong> – link to the live app (and a QR code)</li>
+<li><strong>The problem</strong> – what you learned from the interviews in the design sprint</li>
+<li><strong>Decision log</strong> – the main choices (stack, database, authentication, hosting…): what the AI suggested, what you chose, and why. Compare the solutions you considered in a visual way.</li>
+<li><strong>What the AI got wrong</strong> – the mistakes you found and how you fixed them, with links to the commits. This is the most valuable part of the report.</li>
+<li><strong>Tutorials</strong> – one short, interactive explanation per student of a complex part of the code that student owns</li>
+<li><strong>How we used AI</strong> – which tools, what for, based on everyone's notes and the AI's own accounts</li>
+</ol>
+<p>Thorough beats pretty. Evidence beats prose.</p>
+<hr />
+<h2>6. How AI Use Is Assessed</h2>
+<p>Two items in the project rubric cover AI use:</p>
+<table>
+<thead>
+<tr>
+<th>Rubric item</th>
+<th>Who</th>
+<th>How</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Understanding your code</td>
+<td>Each student</td>
+<td>A 3–5 minute walkthrough with a teacher of code the student owns, chosen by the teacher from the notes or the commits. Code review sessions and spot checks with a teacher also count</td>
+<td>Presentation of design and GitHub (January 21) or final presentation (January 29) – to be decided</td>
+</tr>
+<tr>
+<td>The AI report</td>
+<td>Each team (notes and tutorial per student)</td>
+<td>Teachers review the report page and the notes, including their git history</td>
+<td>Post assessment, together with the review of the front end and back end</td>
+</tr>
+</tbody>
+</table>
+<p>On January 21 the teachers also look at whether the notes are being committed, and give feedback. This checkpoint is not graded.</p>
+<table>
+<thead>
+<tr>
+<th>10-point</th>
+<th>0–2</th>
+<th>3–4</th>
+<th>5–6</th>
+<th>7–8</th>
+<th>9–10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>7-point</strong></td>
+<td>02</td>
+<td>4</td>
+<td>7</td>
+<td>10</td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Understanding your code</strong></td>
+<td>Cannot explain own code</td>
+<td>Explains own code only with help</td>
+<td>Explains what most of own code does, but not why, or struggles with follow-up questions</td>
+<td>Explains own code with confidence, including why it is built that way, and answers follow-up questions</td>
+<td>Explains the trade-offs and alternatives, and can change or debug the code on the spot</td>
+</tr>
+<tr>
+<td><strong>The AI report</strong></td>
+<td>No report page or notes</td>
+<td>Thin report. The git history shows the notes were written at the end</td>
+<td>All sections present. Notes on most days. Some AI mistakes documented</td>
+<td>Notes every day, tied to commits. Clear decision log with visual comparisons. AI mistakes documented with the commits that fixed them. Every tutorial is clear</td>
+<td>Catches subtle mistakes (security, outdated or invented APIs). Backs comparisons with real measurements. Tutorials teach other students something new</td>
+</tr>
+</tbody>
+</table>
+<p>We grade <strong>how critically you used AI, not how much</strong> you used it. We do not use AI detectors: they are unreliable, and they wrongly flag people who write in a second language, which is all of us.</p>
+<hr />
+<h2>7. If You Cannot Explain Your Code</h2>
+<p>Using AI that you have declared in your notes is never penalised. What matters is whether you understand the result.</p>
+<p>If you cannot explain your code, the following may apply:</p>
+<ul>
+<li>The section may be marked incomplete</li>
+<li>You may be asked to rewrite it independently</li>
+<li>A one-on-one technical interview may be requested</li>
+</ul>
+<p>This is not a punishment — it is a way to make sure the project is a real learning experience.</p>
+<hr />
+<h2>8. A Note on Integrity</h2>
+<p>Using AI is fine. Submitting AI output you do not understand — and presenting it as your own — is not.</p>
+<p>AI can make you a better developer, but only if you engage with it critically and take responsibility for what ends up in your code.</p>
+<blockquote>
+<p><strong>Before you commit, ask yourself:</strong></p>
+<ul>
+<li>✓ Can I explain every line?</li>
+<li>✓ Did I note what the AI got wrong today?</li>
+<li>✓ Are my notes and the AI's account for today committed?</li>
+<li>✓ Would I be comfortable walking a teacher through this right now?</li>
+</ul>
+</blockquote>
+
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="eyebrow">Sources</p>
+    <ol>
+      <li>Gonsalves, C. (2025). Addressing student non-compliance in AI use declarations. <a href="https://kclpure.kcl.ac.uk/portal/en/publications/addressing-student-non-compliance-in-ai-use-declarations-implicat/">kclpure.kcl.ac.uk</a></li>
+      <li>Parreira, Sinha, Sandhaus &amp; Ju (2026). Visible Adoption, Untracked Contribution. <a href="https://arxiv.org/abs/2606.14054">arXiv:2606.14054</a></li>
+      <li>Liang et al. (2023). GPT detectors are biased against non-native English writers. <a href="https://www.cell.com/patterns/fulltext/S2666-3899(23)00130-7">Patterns</a></li>
+      <li>Corbin, Dawson &amp; Liu (2025). Talk is cheap: why structural assessment changes are needed for a time of GenAI. <a href="https://eric.ed.gov/?id=EJ1490530">ERIC</a></li>
+      <li>Kannam, Yang, Dharm &amp; Lin (2025). Code Interviews. SIGCSE 2025. <a href="https://arxiv.org/abs/2410.01010">arXiv:2410.01010</a></li>
+      <li>Børne- og Undervisningsministeriet. Brug af AI-baserede værktøjer til prøverne og under forberedelse. <a href="https://www.uvm.dk/erhvervsuddannelser/proever-og-eksamen/brug-af-ai-baserede-vaerktoejer-til-proeverne-og-under-forberedelse">uvm.dk</a></li>
+    </ol>
+  </div>
+</footer>
+
+<script>
+const sections = [
+  { n: "1", t: "Try it", why: "Link to the live app, with a QR code for phones.",
+    html: '<div class="entry"><span class="sha">sustainable-island-team3.example.app</span><p>Recycling points in Las Palmas: find the nearest bin for each kind of waste and report a full one.</p></div>' },
+  { n: "2", t: "The problem", why: "What the team learned from interviews with real people in the design sprint.",
+    html: '<div class="entry"><p><b>7 interviews</b>, 3 cities. Most people knew where glass goes, few knew where to take batteries. Full bins were the most common complaint.</p></div>' },
+  { n: "3", t: "Decision log", why: "The main choices: what the AI suggested, what the team chose, and why. Compared in a visual way.",
+    html: '<div class="entries"><div class="entry"><p><b>Database: Postgres.</b> The AI suggested MongoDB. Our data (points, categories, users) is related, so we chose Postgres. Side-by-side schema diagrams of both options.</p></div><div class="entry"><p><b>Hosting: one server for app and API.</b> Cheapest option for the skills in the team, as the brief asks. A cost table of three hosts.</p></div></div>' },
+  { n: "4", t: "What the AI got wrong", why: "Mistakes the team found and how they were fixed, with links to the commits.",
+    html: '<div class="entries"><div class="entry wrong"><span class="label">API key exposed</span><p>The key was in a VITE_ variable and visible in the browser. Moved to the server.</p><span class="sha">e18a0b7</span></div><div class="entry wrong"><span class="label">Trusted the client</span><p>The API took the user id from the request body. It now reads it from the token.</p><span class="sha">3fd21c0</span></div><div class="entry wrong"><span class="label">Invented option</span><p>Used a map library option that does not exist in the version we installed.</p><span class="sha">b77e412</span></div></div>' },
+  { n: "5", t: "Tutorials", why: "One short, interactive explanation per student, of a complex part of the code that student owns.",
+    html: '<div class="entries"><div class="entry"><p><b>How our map loads only the visible points</b> · with a live slider for the zoom level</p></div><div class="entry"><p><b>Why the server, not the browser, decides who you are</b> · with a request you can edit</p></div></div>' },
+  { n: "6", t: "How we used AI", why: "Which tools, what for. Summarised from everyone's notes and the AI's own accounts.",
+    html: '<div class="entry"><p>Two agents and one browser chat. The agents wrote most of the first versions of the components and API routes. We rewrote the auth and the data model ourselves after code reviews with our teachers.</p></div>' }
+];
+const tabs = document.getElementById("tabs");
+const panel = document.getElementById("panel");
+function show(i) {
+  const s = sections[i];
+  [...tabs.children].forEach((b, j) => { b.setAttribute("aria-selected", String(i === j)); b.tabIndex = i === j ? 0 : -1; });
+  panel.innerHTML = '<span class="example">Example</span><h3>' + s.t + '</h3><p class="why">' + s.why + '</p>' + s.html;
+}
+sections.forEach((s, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.setAttribute("role", "tab"); b.id = "tab-" + i;
+  b.innerHTML = "<span>" + s.n + "</span>" + s.t;
+  b.addEventListener("click", () => show(i));
+  b.addEventListener("keydown", e => {
+    const d = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    const k = (i + d + sections.length) % sections.length;
+    show(k); tabs.children[k].focus();
+  });
+  tabs.appendChild(b);
+});
+show(3);
+
+// Tables in the policy text scroll on their own at phone width
+document.querySelectorAll(".policy table").forEach(t => {
+  const w = document.createElement("div"); w.className = "tablewrap";
+  t.parentNode.insertBefore(w, t); w.appendChild(t);
+});
+
+const copy = document.getElementById("copy");
+copy.addEventListener("click", () => {
+  const el = document.getElementById("prompt-text");
+  const done = () => { copy.textContent = "Copied"; setTimeout(() => copy.textContent = "Copy prompt", 1800); };
+  const select = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copy.textContent = "Selected, press Ctrl+C"; };
+  try { navigator.clipboard.writeText(el.textContent).then(done, select); } catch (e) { select(); }
+});
+
+// Highlight the current section in the bar
+const links = [...document.querySelectorAll(".bar a")];
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id));
+  });
+}, { rootMargin: "-40% 0px -55% 0px" });
+document.querySelectorAll("section[id]").forEach(s => io.observe(s));
+</script>
+
+</body>
+</html>
