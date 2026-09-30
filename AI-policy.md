@@ -93,10 +93,10 @@ Two items in the project rubric cover AI use:
 
 | Rubric item | Who | How | When |
 |---|---|---|---|
-| Understanding your code | Each student | A 3–5 minute walkthrough with a teacher of code the student owns, chosen by the teacher from the notes or the commits. Code review sessions and spot checks with a teacher also count | Presentation of design and GitHub (January 21) or final presentation (January 29) – to be decided |
+| Understanding your code | Each student | A 3–5 minute walkthrough with a teacher of code the student owns, chosen by the teacher from the notes or the commits. Code review sessions and spot checks with a teacher also count | Group visits (January 21) or final presentation (January 29) – to be decided |
 | The AI report | Each team (notes and tutorial per student) | Teachers review the report page and the notes, including their git history | Post assessment, together with the review of the front end and back end |
 
-On January 21 the teachers also look at whether the notes are being committed, and give feedback. This checkpoint is not graded.
+On January 21 there are no presentations. Instead, two teachers visit each group where it works and ask every group the same questions about the design sprint, the design, the UI and GitHub. One teacher asks, the other marks the answers. The teachers also look at your notes and give feedback. This part is not graded.
 
 | 10-point | 0–2 | 3–4 | 5–6 | 7–8 | 9–10 |
 |---|---|---|---|---|---|

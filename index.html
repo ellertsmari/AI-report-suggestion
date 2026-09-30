@@ -271,6 +271,11 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
 .badge.opt-a, .badge.opt-b { color: var(--accent); }
 .legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: var(--step--1); color: var(--muted); align-items: center; }
 .full-rubric td:first-child small { display: block; font-weight: 400; color: var(--muted); font-size: 0.78rem; margin-top: 0.2rem; }
+.questions { min-width: 46rem; font-size: 0.95rem; }
+.questions td:first-child { font-weight: 600; width: 12rem; }
+.questions td:first-child small { display: block; font-weight: 400; color: var(--muted); font-size: 0.8rem; margin-top: 0.2rem; }
+.questions td:last-child { color: var(--muted); width: 13rem; }
+.questions tr.aside td { background: var(--bg); }
 </style>
 </head>
 <body>
@@ -283,6 +288,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
     <a href="#report">AI report</a>
     <a href="#notes">Daily notes</a>
     <a href="#rubric">Rubric items</a>
+    <a href="#visits">Group visits</a>
     <a href="#when">When to assess</a>
     <a href="#full">Full rubric</a>
     <a href="#evidence">Evidence</a>
@@ -295,7 +301,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
   <div class="wrap">
     <p class="eyebrow">The Sustainable Island 2027 · AI Use Policy, version 2</p>
     <h1>Use AI freely. <span>Own every line.</span> Show your work.</h1>
-    <p class="lead">A proposal for the teachers' meeting on 2 October 2026. It builds on Heinz's draft from May. His principle, structure and most of his wording stay. v2 adds how students record their AI use, what they hand in, and how we grade it.</p>
+    <p class="lead">A proposal for the teachers' meeting on 2 October 2026. It builds on Heinz's draft from May. His principle, structure and most of his wording stay. v2 adds how students record their AI use, what they hand in, and how we grade it. It also suggests replacing the presentation on 21 January with group visits.</p>
     <div class="schools" aria-label="Partner schools">
       <span class="school">I.E.S. El Rincón · Las Palmas</span>
       <span class="school">Tækniskólinn · Reykjavík</span>
@@ -384,6 +390,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
           <tr><td>Interviews<span class="new">new</span></td><td class="v1">Not covered</td><td>Design sprint interviews must be with real people</td><td>The problem has to come from real users, not generated ones</td></tr>
           <tr><td>AI report<span class="new">new</span></td><td class="v1">Not covered</td><td><code>report/index.html</code> with six sections, built with AI from the notes</td><td>Students practise turning their work into a clear, visual report. Other teams learn from it</td></tr>
           <tr><td>Grading</td><td class="v1">Methods listed, no rubric item</td><td>Two rubric items: Understanding your code and The AI report</td><td>Every requirement in the policy now has a place in the grade</td></tr>
+          <tr><td>21 January<span class="new">new</span></td><td class="v1">Not covered. Today each group presents its design and GitHub to everyone</td><td>Group visits: pairs of teachers ask every group the same questions. One asks, the other marks</td><td>No presentation area in the classroom, which students complained about last year. The same questions make the groups comparable, and the visit is a natural place to talk through each student's code</td></tr>
           <tr><td>Penalties</td><td class="v1"><q>This is not a punishment</q></td><td>Kept. Adds: declared AI use is never penalised, and no AI detectors are used</td><td>Fear of penalties is the main reason students hide AI use</td></tr>
         </tbody>
       </table>
@@ -401,7 +408,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
       <li><time>11–15 Jan</time><div><h3>Online design sprint</h3><p>Teams interview real people. AI can help prepare the questions and sort the notes. Each student starts a notes file in the team repository.</p></div></li>
       <li><time>18 Jan</time><div><h3>Meetup in Las Palmas</h3><p>Teams set up <code>report/notes/</code> and agree who owns which part of the code.</p></div></li>
       <li><time>19–28 Jan</time><div><h3>Project work</h3><p>Every day: students commit their notes and the AI's account. Teachers run code reviews and spot checks, which count toward Understanding your code.</p></div></li>
-      <li><time>21 Jan</time><div><h3>Presentation of design and GitHub</h3><p>Design, Design Sprint, UI and GitHub are graded. Teachers check that the notes are being committed and give feedback (not graded). <span class="check">Option A:</span> Understanding your code is graded here.</p></div></li>
+      <li><time>21 Jan</time><div><h3>Group visits</h3><p>Pairs of teachers visit each group where it works and ask every group the same questions. Design, Design Sprint, UI and GitHub are graded. The teachers also look at the notes and give feedback (not graded). <span class="check">Option A:</span> Understanding your code is graded here.</p></div></li>
       <li><time>29 Jan</time><div><h3>Final presentation</h3><p>Product, Presentation and Q&amp;A are graded. Teams submit the link to their AI report. <span class="check">Option B:</span> Understanding your code is graded here.</p></div></li>
       <li><time>After</time><div><h3>Post assessment</h3><p>Teachers review the front end and back end code, and grade The AI report alongside it.</p></div></li>
     </ol>
@@ -498,20 +505,53 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
   </div>
 </section>
 
+<section id="visits">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">21 January · suggestion</p>
+      <h2>Group visits instead of presentations</h2>
+      <p class="lead">On 21 January the groups do not present. Pairs of teachers visit each group where it works and ask every group the same questions. One teacher asks, and the other marks the answers on the rubric.</p>
+    </div>
+    <div class="evidence">
+      <div class="fact"><span class="num">4 pairs</span><p>8 teachers work in pairs of two: one asks the questions, one marks.</p></div>
+      <div class="fact"><span class="num">~2 groups</span><p>per pair, with about 8 groups in the project.</p></div>
+      <div class="fact"><span class="num">30–35 min</span><p>per visit: about 15 minutes of group questions, plus 3–5 minutes per student if Understanding your code is graded here. In 2026 the groups had 3–4 students.</p></div>
+    </div>
+    <div class="parts">
+      <div class="part"><p class="eyebrow">Why visits</p><ul><li>No part of the classroom has to become a presentation area, which students complained about last year</li><li>Every group gets the same questions, so the marks are comparable</li><li>Students answer at their own screens, where they can show their work</li><li>Checking each student's code fits into the visit without an extra session</li></ul></div>
+      <div class="part"><p class="eyebrow">What we need to agree on</p><ul><li>The question list below</li><li>Who is in each pair, and which groups they visit</li><li>The time slot for each visit</li></ul></div>
+    </div>
+    <div class="subhead"><h3>Draft question list</h3><p class="note">Every group gets the same questions in the same order. Each question belongs to a rubric item, so every answer can be marked.</p></div>
+    <div class="scroll">
+      <table class="questions">
+        <thead><tr><th scope="col">Rubric item</th><th scope="col">The asking teacher says</th><th scope="col">Students show</th></tr></thead>
+        <tbody>
+          <tr><td>Design Sprint</td><td>Who did you interview, and what did you learn that changed your idea? Which UN goal does your solution support?</td><td>Interview notes, problem statement</td></tr>
+          <tr><td>Design</td><td>Walk us through the main user flow. Which design decision are you least sure about?</td><td>The prototype</td></tr>
+          <tr><td>UI - Figma/XD</td><td>Which screens are designed, and how closely does the app follow them so far?</td><td>The Figma file next to the app</td></tr>
+          <tr><td>GitHub</td><td>How do you use branches and pull requests? Who reviewed the last pull request, and what did they find?</td><td>Branches, pull requests, commit history</td></tr>
+          <tr class="aside"><td>AI notes<small>Feedback, not graded</small></td><td>What has the AI got wrong so far, and how did you find out?</td><td><code>report/notes/</code></td></tr>
+          <tr class="aside"><td>Understanding your code<small>Option A, per student</small></td><td>For each student, the teacher picks a commit or file from their notes: “Walk us through this. Why is it built this way? What would you change if…?”</td><td>The student's own code</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
 <section id="when">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow">For discussion</p>
       <h2>When do we judge each item?</h2>
     </div>
-    <div class="subhead"><h3>Understanding your code: 21 or 29 January?</h3><p class="note">3–5 minutes per student. One teacher can see 12–20 students in an hour.</p></div>
+    <div class="subhead"><h3>Understanding your code: 21 or 29 January?</h3><p class="note">3–5 minutes per student. In 2026 there were 35 students in 9 groups of 3–4.</p></div>
     <div class="options">
       <div class="opt">
         <span class="tag">Option A · 21 January</span>
-        <h4>With the design, UI and GitHub assessment</h4>
+        <h4>During the group visits</h4>
         <dl>
           <dt class="for">For</dt>
-          <dd><ul><li>Students get the result while there is still time to change how they work</li><li>The final presentation day stays as it is</li><li>The code is fresh in their minds</li></ul></dd>
+          <dd><ul><li>The teachers are already at the group's screens, so it adds 12–20 minutes per visit and no extra session</li><li>Students get the result while there is still time to change how they work</li><li>The final presentation day stays as it is</li></ul></dd>
           <dt class="against">Against</dt>
           <dd><ul><li>Only a few days of code exist</li><li>It judges the start of the project, not what was shipped</li><li>Students who own later features have little to show yet</li></ul></dd>
         </dl>
@@ -523,7 +563,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
           <dt class="for">For</dt>
           <dd><ul><li>All the code exists, so it checks what was actually shipped</li><li>It extends the Q&amp;A the presentation already has</li></ul></dd>
           <dt class="against">Against</dt>
-          <dd><ul><li>It adds 3–5 minutes per student to a day that is already full</li><li>No time to improve afterwards</li><li>Students are tired and nervous on the last day</li></ul></dd>
+          <dd><ul><li>It adds 3–5 minutes per student to a day that is already full: about 2–3 hours for 35 students if done one after another</li><li>No time to improve afterwards</li><li>Students are tired and nervous on the last day</li></ul></dd>
         </dl>
       </div>
     </div>
@@ -550,7 +590,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
       <div class="legend"><span><span class="badge new">New</span> new item</span><span><span class="badge opt-a">Option A</span> / <span class="badge opt-b">Option B</span> Understanding your code goes in one of these two places</span></div>
     </div>
     <div class="stage">
-      <h3>Design sprint, UI and GitHub<span>21 January</span></h3>
+      <h3>Design sprint, UI and GitHub<span>21 January · group visits</span></h3>
       <div class="scroll"><table class="full-rubric">
         <thead><tr><th scope="col">10-point</th><th scope="col">0–2</th><th scope="col">3–4</th><th scope="col">5–6</th><th scope="col">7–8</th><th scope="col">9–10</th></tr></thead>
         <tbody>
@@ -618,8 +658,9 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
     </div>
     <ol class="agenda">
       <li><div><h3>Adopt v2 as the common policy for 2027?</h3><p>Or agree on changes, and merge the branch once they are in.</p></div></li>
+      <li><div><h3>Replace the 21 January presentation with group visits?</h3><p>Four pairs of teachers, about two groups each, the same questions for every group. Do we agree on the question list, and do we mix schools in each pair?</p></div></li>
       <li><div><h3>Does v2 fit each school's own rules?</h3><p>In Danish vocational programmes, AI is not a permitted aid in exams or exam preparation unless the programme's fagbilag allows it [6]. TECHCOLLEGE: does any part of the project count as an exam? El Rincón: are there Spanish or Canarian rules to add?</p><p class="who">TECHCOLLEGE · El Rincón</p></div></li>
-      <li><div><h3>When do we grade Understanding your code?</h3><p>On 21 January with the design, UI and GitHub assessment, or on 29 January with the final presentation. Either way: how do we split the students between the teachers?</p></div></li>
+      <li><div><h3>When do we grade Understanding your code?</h3><p>During the group visits on 21 January, or at the final presentation on 29 January. If on 29 January: how do we split the students between the teachers?</p></div></li>
       <li><div><h3>The AI report in the post assessment?</h3><p>And do we keep each new item as one grade, or split them into the smaller parts?</p></div></li>
       <li><div><h3>How does an individual item fit with team grades?</h3><p>Understanding your code is per student. Today the team gets a grade and peer evaluation adjusts it for each student.</p></div></li>
       <li><div><h3>LMS changes</h3><p>A link to the AI report in the team hub, the two new items in the teacher evaluation, and a per-student score for Understanding your code.</p><p class="who">Tækniskólinn can build this</p></div></li>
@@ -715,7 +756,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
 <td>Understanding your code</td>
 <td>Each student</td>
 <td>A 3–5 minute walkthrough with a teacher of code the student owns, chosen by the teacher from the notes or the commits. Code review sessions and spot checks with a teacher also count</td>
-<td>Presentation of design and GitHub (January 21) or final presentation (January 29) – to be decided</td>
+<td>Group visits (January 21) or final presentation (January 29) – to be decided</td>
 </tr>
 <tr>
 <td>The AI report</td>
@@ -725,7 +766,7 @@ footer ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-s
 </tr>
 </tbody>
 </table>
-<p>On January 21 the teachers also look at whether the notes are being committed, and give feedback. This checkpoint is not graded.</p>
+<p>On January 21 there are no presentations. Instead, two teachers visit each group where it works and ask every group the same questions about the design sprint, the design, the UI and GitHub. One teacher asks, the other marks the answers. The teachers also look at your notes and give feedback. This part is not graded.</p>
 <table>
 <thead>
 <tr>
