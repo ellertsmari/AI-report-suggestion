@@ -5,6 +5,7 @@ A proposal for how AI use is assessed in The Sustainable Island 2027, an Erasmus
 It builds on the AI Use Policy Addendum drafted by Heinz K (TECHCOLLEGE) in May 2026.
 
 - **Presentation:** https://ellertsmari.github.io/AI-report-suggestion/
+- **Slideshow for the meeting:** https://ellertsmari.github.io/AI-report-suggestion/slides.html (arrow keys, N for speaker notes, O for an overview, F for fullscreen)
 - **Policy text (v2):** [AI-policy.md](AI-policy.md)
 - **Film (70 s, with sound and subtitles):** [film.mp4](film.mp4)
 
